@@ -58,6 +58,7 @@ const Rotate = styled.div`
                       <Button><div><Link to="/scoreboard">Scoreboard</Link></div></Button> 
                       <Button color="default" ><div><Link to="/startscreen">Play Game</Link></div></Button>
                       <Button color="default" ><div><Link to="/">Login</Link></div></Button>
+                      <Button color="default" ><div><Link to="/game">Game</Link></div></Button>
                       <Rotate><img src={Blue_Virus}></img></Rotate>
                     </div>
               </Nav>
