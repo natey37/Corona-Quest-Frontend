@@ -3,11 +3,10 @@ import Pink_Virus from './Pink_Virus.png';
 import Blue_Virus from './Blue_Virus.png';
 import styled, { keyframes } from "styled-components"
 
-import { Anchor, Box, Grommet, Main, Nav, Header } from "grommet";
+import { Box, Grommet, Nav, Header } from "grommet";
 
 import { grommet } from "grommet/themes";
-import { deepMerge } from "grommet/utils";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 
 function NavBar(props) {

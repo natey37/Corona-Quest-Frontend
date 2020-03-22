@@ -1,23 +1,16 @@
 
 import React from 'react';
-import Blue_Virus from './Blue_Virus.png';
-import Pink_Virus from './Pink_Virus.png';
 import NavBar from './NavBar';
 // import { Route } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import {Button} from "grommet";
+
 
 
 function LogIn() {
   return (
     <div>
     <NavBar/>
-       {/* <div className="LogIn">
-            <div style={{fontSize: 100 + 'px'}}>
-            <img src={Pink_Virus}></img>
-            CORONA QUEST
-            <img src={Blue_Virus}></img>
-            </div>
-             */}
-
       <div>
         <label>Log In </label>
       </div>
@@ -34,7 +27,7 @@ function LogIn() {
           </label>
             <input type="submit" value="Log In" />
         </form>
-          <button>Create New User!</button>
+          <Button color="default" ><div><Link to="/signuppage">Create New User!</Link></div></Button>
       </div>
      
     </div>

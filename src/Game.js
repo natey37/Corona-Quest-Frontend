@@ -1,8 +1,12 @@
 import React from 'react';
 import Cell from './components/Cell.js'
 import Obstacle from './components/Obstacle.js'
+import Treasure from './components/Treasure.js'
 import './styling/Game.css';
 import obstaclesList from './resources/obstaclesList.js'
+import treasuresList from './resources/treasuresList.js'
+import NavBar from './NavBar.js';
+import { Link} from "react-router-dom";
 
 // Specs for map + grid size, values below for wireframe map size
 const CELL_SIZE = 45; // 45
@@ -18,11 +22,22 @@ class Game extends React.Component {
         this.cols = WIDTH / CELL_SIZE;
         this.board = this.makeEmptyBoard();
     }
-
+    
     state = {
-        cells: [ {x: 5, y: 5} ],  // Player Character starting location
-        obstacles: obstaclesList  // Obstacle locations imported 
-    }                              //    from resources folder        
+        cells: [ {x: 5, y: 5} ],  // Player Character starting location  // REMOVE ARRAY
+        points: null,
+        obstacles: obstaclesList,  // Obstacle locations imported 
+        treasures: treasuresList,  //    from resources folder    
+        characterName: ''
+    }
+    // sets current character form 
+    componentDidMount(){
+        this.setState({
+            characterName: this.props.characterName,
+            points: this.props.points
+        })
+    }
+
 
          //  Generates Underlying Grid  //
 
@@ -76,9 +91,10 @@ class Game extends React.Component {
     
     detectUpObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
             if (obstacle.x === this.state.cells[0].x && obstacle.y === this.state.cells[0].y - 1) {
-                console.log("You hit an obstacle up")
+          //      console.log("You hit an obstacle up")
                 return true
             } else {
                 emptyObstacles.push(obstacle)           
@@ -87,13 +103,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareUp()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x && treasure.y === this.state.cells[0].y - 1) {
+                console.log('You hit a treasure up')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectDownObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x && obstacle.y === this.state.cells[0].y + 1) {
-              console.log("You hit an obstacle down")
+            //   console.log("You hit an obstacle down")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -102,13 +130,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareDown()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x && treasure.y === this.state.cells[0].y + 1) {
+                console.log('You hit a treasure down')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectLeftObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x - 1 && obstacle.y === this.state.cells[0].y) {
-              console.log("You hit an obstacle left")
+            //   console.log("You hit an obstacle left")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -117,13 +157,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareLeft()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x - 1 && treasure.y === this.state.cells[0].y) {
+                console.log('You hit a treasure left')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectRightObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x + 1 && obstacle.y === this.state.cells[0].y) {
-              console.log("You hit an obstacle right")
+            //   console.log("You hit an obstacle right")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -132,6 +184,17 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareRight()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x + 1 && treasure.y === this.state.cells[0].y) {
+                console.log('You hit a treasure right')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
       // Conditional Methods that direct response to
@@ -139,9 +202,10 @@ class Game extends React.Component {
 
     detectDiagUpLeftObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x - 1 && obstacle.y === this.state.cells[0].y - 1) {
-              console.log("You hit an obstacle in the diagonal up left corner")
+            //   console.log("You hit an obstacle in the diagonal up left corner")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -150,13 +214,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareDiagUpLeft()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x - 1 && treasure.y === this.state.cells[0].y - 1) {
+                console.log('You hit a treasure diagonal up left')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectDiagUpRightObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x + 1 && obstacle.y === this.state.cells[0].y - 1) {
-              console.log("You hit an obstacle in the diagonal up right corner")
+            //   console.log("You hit an obstacle in the diagonal up right corner")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -165,13 +241,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareDiagUpRight()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x + 1 && treasure.y === this.state.cells[0].y - 1) {
+                console.log('You hit a treasure diagonal up right')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectDiagDownLeftObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x - 1 && obstacle.y === this.state.cells[0].y + 1) {
-              console.log("You hit an obstacle in the diagonal down left corner")
+            //   console.log("You hit an obstacle in the diagonal down left corner")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -180,13 +268,25 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareDiagDownLeft()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x - 1 && treasure.y === this.state.cells[0].y + 1) {
+                console.log('You hit a treasure diagonal down left')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     detectDiagDownRightObstacles = () => {
         let emptyObstacles = [];
+        let emptyTreasures = [];
         this.state.obstacles.forEach((obstacle) => {
            if (obstacle.x === this.state.cells[0].x + 1 && obstacle.y === this.state.cells[0].y + 1) {
-              console.log("You hit an obstacle in the diagonal down right corner")
+            //   console.log("You hit an obstacle in the diagonal down right corner")
               return true
            } else {
             emptyObstacles.push(obstacle)           
@@ -195,6 +295,17 @@ class Game extends React.Component {
         if (emptyObstacles.length > 58) {
             this.moveSquareDiagDownRight()
         }
+        this.state.treasures.forEach((treasure) => {
+            if (treasure.x === this.state.cells[0].x + 1 && treasure.y === this.state.cells[0].y + 1) {
+                console.log('You hit a treasure diagonal down right')
+                this.setState(prevState => ( {points: prevState.points + 50} ), () => {
+                console.log(`You earned 50pts! You have ${this.state.points} total pts`)
+                })
+            } else {
+                emptyTreasures.push(treasure)
+            }
+        })
+        this.setState({ treasures: emptyTreasures })
     }
 
     // Primary Handler for response to key presses // 
@@ -267,15 +378,23 @@ class Game extends React.Component {
                     return
         }
     }
+
+
         // Map Render function //
 
     render() {
         
-        const { cells, obstacles } = this.state;
+        const { cells, obstacles, treasures } = this.state;
         let div = document.getElementById("Board")
+        
+        console.log(this.state.points)
+        console.log(this.props)
         
         return (
             <div>
+                <NavBar/>
+                <h2 style={{textAlign: 'center'}}>Welcome {this.state.characterName}</h2>
+
                 <div className="Board" id="Board" tabIndex="0"   // tabIndex enables recognition of keyPress by div
                     onKeyDown={this.handleKeyPress} 
                     style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
@@ -287,9 +406,13 @@ class Game extends React.Component {
                         <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                         
                     ))} 
+                    {treasures.map(treasure => (
+                        <Treasure x={treasure.x} y={treasure.y} key={`${treasure.x},${treasure.y}`}/>
+                        
+                    ))} 
                 </div>
-                <div className="text-box">
-                  
+                <div>
+                    <button onClick={() => this.props.finishGame(this.state.points)}><div><Link to="/Scoreboard">End Game</Link></div></button>
                 </div>
             </div>
         );
