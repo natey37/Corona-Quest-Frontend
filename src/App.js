@@ -10,6 +10,7 @@ import { Route, Switch } from "react-router-dom";
 class App extends React.Component {
 
     state = {
+      points: 0, 
       highScores: [],
       characters: [],
       characterForm: {
@@ -18,19 +19,23 @@ class App extends React.Component {
           hp: 100,
           score: 0, 
           user_id: 1, 
-      }
+      },
+      charID: null
     }
   //fetch characters
   componentDidMount(){
       fetch('http://localhost:3000/characters')
       .then(resp => resp.json())
       .then(characters => {
+        console.log(characters)
           this.setState({
-              characters: characters
+              characters: characters,
+              // highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).splice(0, 15)
           })
-      })
+      }) 
   }
 
+ 
    ///reset newChar form
 //    resetForm = () => {
 //     this.setState({
@@ -63,11 +68,12 @@ class App extends React.Component {
           body: JSON.stringify(this.state.characterForm)
       }).then((response) => response.json())
       .then((data) => {
-        console.log('Success:', data);
+        console.log(data)
+        this.setState({
+          charID: data.id
+        })
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      
       // .resp(resp => resp.json()).then(data => {console.log(data)})
       console.log("form sent?")
       // this.resetForm()
@@ -76,20 +82,34 @@ class App extends React.Component {
 
    //test finish game --> send points to scoreboard
    finishGame = (points) => {
-    console.log(points)
+     console.log(this.state.characterForm)
     this.setState({
       characterForm: {...this.state.characterForm, score: points}
     }, () => {
-      console.log(this.state.characterForm)
       let highScores = this.state.characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
       this.setState({
         highScores: highScores
       })
+      console.log(this.state.characterForm)
+      fetch(`http://localhost:3000/characters/${this.state.charID}`, {
+        method: "PATCH", 
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({
+          ...this.state.characterForm, score: points
+        })
+      }).then(resp => resp.json()).then(data => {console.log(data)})
+  
     })
+
+    
+
     
 }
 
   render(){
+
     return (
    
       <div className="App">
@@ -102,7 +122,7 @@ class App extends React.Component {
             render={(props) => <Game {...props} characterName={this.state.characterForm.name} finishGame={this.finishGame} points={this.state.points} />}
             />
             <Route exact path="/scoreboard" 
-             render={(props) => <ScoreBoard {...props} highScores={this.state.highScores} />}
+             render={(props) => <ScoreBoard {...props} highScores={this.state.highScores} characterForm={this.state.characterForm} />}
             />
             <Route exact path="/signuppage" component={SignupPage} />
         </Switch> 

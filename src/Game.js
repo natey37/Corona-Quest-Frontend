@@ -25,7 +25,7 @@ class Game extends React.Component {
     
     state = {
         cells: [ {x: 5, y: 5} ],  // Player Character starting location  // REMOVE ARRAY
-        points: null,
+        points: 0,
         obstacles: obstaclesList,  // Obstacle locations imported 
         treasures: treasuresList,  //    from resources folder    
         characterName: ''
@@ -388,7 +388,6 @@ class Game extends React.Component {
         let div = document.getElementById("Board")
         
         console.log(this.state.points)
-        console.log(this.props)
         
         return (
             <div>
