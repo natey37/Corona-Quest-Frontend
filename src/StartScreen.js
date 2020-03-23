@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './NavBar'
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 
 class StartScreen extends React.Component {
@@ -24,6 +24,7 @@ class StartScreen extends React.Component {
      
             <div className="StartScreen">
             <NavBar/>
+            {/* {this.props.isLogged && <Redirect to='/' />} */}
             <br></br>
                 <div>
                     Begin Your Corona Quest!
@@ -65,7 +66,7 @@ class StartScreen extends React.Component {
                         value={this.props.characterForm.name} 
                         type="text" name="name" />
                     </label>
-                    <button onClick={(event) => this.props.createNewCharacter(event)}><div><Link to="/game">Start Your Quest!</Link></div></button>
+                    <button ><div><Link to="/game">Start Your Quest!</Link></div></button>
                 </form>
 
                 

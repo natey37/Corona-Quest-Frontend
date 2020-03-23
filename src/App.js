@@ -4,7 +4,8 @@ import SignUp from './SignUp'
 import ScoreBoard from './ScoreBoard'
 import Game from './Game'
 import LogIn from './LogIn'
-import { Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import history from './history';
 
 
 class App extends React.Component {
@@ -28,15 +29,15 @@ class App extends React.Component {
       userLogged: null, 
       errors: []
     }
+
   //fetch characters
   componentDidMount(){
       fetch('http://localhost:3000/characters')
       .then(resp => resp.json())
       .then(characters => {
-        console.log(characters)
           this.setState({
               characters: characters,
-              highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse().splice(1, 10)
+              highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse().slice(0, 15)
           })
       }) 
   }
@@ -48,10 +49,6 @@ class App extends React.Component {
       })
   }
   
-  ////add new character to backend 
-  createNewCharacter = (event) => {
-      event.preventDefault()
-  }
 
 
    //test finish game --> send points to scoreboard
@@ -85,6 +82,7 @@ class App extends React.Component {
               }
             )
     })
+    history.push('/scoreboard')
 }
 
   
@@ -121,13 +119,7 @@ class App extends React.Component {
         })
       }
     })
-    // this.setState({
-    //   userForm: {
-    //     username: '', 
-    //     password: ''
-    //   }
-    // })
-   
+    
   }
 
   render(){
@@ -135,21 +127,23 @@ class App extends React.Component {
     return (
    
       <div className="App">
+          <Router history={history}>
          <Switch>
             <Route exact path="/" 
             render={(props) => <SignUp {...props} userForm={this.state.userForm} handleChange={this.handleLoginChange} handleSubmit={this.handleLoginSubmit}userLogged={this.state.userLogged} errors={this.state.errors}/>}
             /> 
             <Route exact path="/startscreen" 
-            render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter}/>}
+            render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter} userLogged={this.state.userLogged}/>}
             />
             <Route exact path="/game" 
-            render={(props) => <Game {...props} characterName={this.state.characterForm.name} finishGame={this.finishGame} points={this.state.points} />}
+            render={(props) => <Game {...props} characterName={this.state.characterForm.name} characterForm={this.state.characterForm} finishGame={this.finishGame} points={this.state.points} userLogged={this.state.userLogged} />}
             />
             <Route exact path="/scoreboard" 
-             render={(props) => <ScoreBoard {...props} highScores={this.state.highScores} characterForm={this.state.characterForm} />}
+             render={(props) => <ScoreBoard {...props} highScores={this.state.highScores} characterForm={this.state.characterForm} userLogged={this.state.userLogged}/>}
             />
             <Route exact path="/signuppage" component={LogIn} />
         </Switch> 
+        </Router>
       </div>
      
     );

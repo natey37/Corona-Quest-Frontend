@@ -9,7 +9,6 @@ import {Button} from "grommet";
 
 class SignUp extends React.Component {
 
-  ///////NEED TO CHANGE TO SIGN UP PAGE AND CHANGE SIGN UP TO LOG IN 
  
   render () {
     

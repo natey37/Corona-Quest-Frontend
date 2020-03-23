@@ -2,11 +2,15 @@ import React from 'react';
 import Cell from './components/Cell.js'
 import Obstacle from './components/Obstacle.js'
 import Treasure from './components/Treasure.js'
+import Exit from './components/Exit.js'
+
 import './styling/Game.css';
 import obstaclesList from './resources/obstaclesList.js'
 import treasuresList from './resources/treasuresList.js'
+import exitsList from './resources/exitsList.js'
+
 import NavBar from './NavBar.js';
-import { Link} from "react-router-dom";
+import { Link, Redirect} from "react-router-dom";
 
 // Specs for map + grid size, values below for wireframe map size
 const CELL_SIZE = 45; // 45
@@ -27,7 +31,8 @@ class Game extends React.Component {
         cells: [ {x: 5, y: 5} ],  // Player Character starting location  // REMOVE ARRAY
         points: 0,
         obstacles: obstaclesList,  // Obstacle locations imported 
-        treasures: treasuresList,  //    from resources folder    
+        treasures: treasuresList,
+        exits: exitsList,  //    from resources folder    
         characterName: ''
     }
     // sets current character form 
@@ -384,7 +389,7 @@ class Game extends React.Component {
 
     render() {
         
-        const { cells, obstacles, treasures } = this.state;
+        const { cells, obstacles, treasures, exits } = this.state;
         let div = document.getElementById("Board")
         
         console.log(this.state.points)
@@ -392,7 +397,23 @@ class Game extends React.Component {
         return (
             <div>
                 <NavBar/>
-                <h2 style={{textAlign: 'center'}}>Welcome {this.state.characterName}</h2>
+                {/* {this.props.userLogged && <Redirect to='/' />} */}
+                {/* <h2 style={{textAlign: 'center'}}>Welcome {this.state.characterName}</h2> */}
+                <h2 className="MainQuote">May the Gods smile upon your Quest...</h2>
+                <div>
+                    <h3 className="CharacterName">
+                        {this.state.characterName}
+                    </h3>
+                    <h4 className="HealthPoints">
+                        HP: {this.props.characterForm.hp} / 100
+                    </h4><br></br><br></br>
+                    <h4 className="ManaPoints">
+                        Mana: {this.props.characterForm.mana} / 100
+                    </h4>
+                    <h4 className="Points">
+                        Total Points: {this.state.points}
+                    </h4>
+                </div>
 
                 <div className="Board" id="Board" tabIndex="0"   // tabIndex enables recognition of keyPress by div
                     onKeyDown={this.handleKeyPress} 
@@ -407,6 +428,10 @@ class Game extends React.Component {
                     ))} 
                     {treasures.map(treasure => (
                         <Treasure x={treasure.x} y={treasure.y} key={`${treasure.x},${treasure.y}`}/>
+                        
+                    ))} 
+                    {exits.map(exit => (
+                        <Exit x={exit.x} y={exit.y} key={`${exit.x},${exit.y}`}/>
                         
                     ))} 
                 </div>
