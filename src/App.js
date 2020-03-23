@@ -59,20 +59,9 @@ class App extends React.Component {
   ////add new character to backend 
   createNewCharacter = (event) => {
       event.preventDefault()
-      console.log(this.state.characterForm)
-      fetch('http://localhost:3000/characters', {
-          method: "POST", 
-          headers: {
-              'Content-Type': 'application/json'
-          }, 
-          body: JSON.stringify(this.state.characterForm)
-      }).then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        this.setState({
-          charID: data.id
-        })
-      })
+     
+      // console.log(this.state.characterForm)
+     
       
       // .resp(resp => resp.json()).then(data => {console.log(data)})
       console.log("form sent?")
@@ -86,21 +75,48 @@ class App extends React.Component {
     this.setState({
       characterForm: {...this.state.characterForm, score: points}
     }, () => {
-      let highScores = this.state.characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
-      this.setState({
-        highScores: highScores
-      })
       console.log(this.state.characterForm)
-      fetch(`http://localhost:3000/characters/${this.state.charID}`, {
-        method: "PATCH", 
-        headers: {
-            'Content-Type': 'application/json'
-        }, 
-        body: JSON.stringify({
-          ...this.state.characterForm, score: points
-        })
-      }).then(resp => resp.json()).then(data => {console.log(data)})
-  
+      fetch('http://localhost:3000/characters', {
+            method: "POST", 
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(this.state.characterForm)}, 
+              () => {
+                fetch('http://localhost:3000/characters')
+                  .then(resp => resp.json())
+                  .then(characters => {
+                    console.log(characters)
+                      this.setState({
+                          characters: characters
+                      }, () => {
+                        let highScores = characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
+                        this.setState({
+                          highScores: highScores
+                        })
+                      })
+                }) 
+                // let highScores = characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
+            //     this.setState({
+            //       highScores: highScores
+            //     })
+              }
+            )
+            // .then(resp => resp.json())
+            // .then(characters => {
+            //   console.log(characters)
+            //   this.setState({
+            //     characters: characters
+            //   }, () => {
+            //     console.log(characters)
+            //     let highScores = characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
+            //     this.setState({
+            //       highScores: highScores
+            //     })
+            //   })
+            // })
+            
+    
     })
 
     
