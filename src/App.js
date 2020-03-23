@@ -30,7 +30,7 @@ class App extends React.Component {
         console.log(characters)
           this.setState({
               characters: characters,
-              // highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).splice(0, 15)
+              highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse().splice(1, 10)
           })
       }) 
   }
@@ -96,10 +96,7 @@ class App extends React.Component {
                         })
                       })
                 }) 
-                // let highScores = characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
-            //     this.setState({
-            //       highScores: highScores
-            //     })
+            
               }
             )
             // .then(resp => resp.json())
