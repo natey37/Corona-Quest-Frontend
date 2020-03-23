@@ -1,47 +1,46 @@
-
 import React from 'react';
 import NavBar from './NavBar';
-// import { Route } from 'react-router-dom';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {Button} from "grommet";
 
 
 
 class LogIn extends React.Component {
 
- 
-  render () {
+    handleSubmit = (event) => {
+        console.log(event.target)
+    }
+
+    render () {
+        return (
+            <div>
+            <NavBar/>
+              <div>
+                <label>Welcome! </label>
+              </div>
+              <div >
+                <form onSubmit={(event) => this.handleSubmit(event)}>
+                  <label>
+                    Username:
+                    <input type="text" name="name" />
+                  </label>
+                  <br></br>
+                  <label>
+                    Password:
+                    <input type="text" name="name" />
+                  </label>
+                      
+                    <Button color="default" ><div><Link to="/startscreen">Begin Your Quest!</Link></div></Button>
+                </form>
+                 
+              </div>
+             
+            </div>
+        
+           
+          );
+    }
     
-    return (
-      <div>
-      <NavBar/>
-      {this.props.userLogged === true && <Redirect to='/startscreen' />}
-        <div>
-          <label>Log In </label>
-        </div>
-        <div >
-          <form onSubmit={(event) => this.props.handleSubmit(event)}>
-            <label>
-              Username:
-              <input onChange={(event) => this.props.handleChange(event)} value={this.props.userForm.username} type="text" name="username" />
-            </label>
-            <br></br>
-            <label>
-              Password:
-              <input onChange={(event) => this.props.handleChange(event)} value={this.props.userForm.password} type="text" name="password" />
-            </label>
-              <input  type="submit" value="Log In" ></input>
-          </form>
-          {this.props.userLogged === false && this.props.errors.map(error => <h3 key={error}>{error}</h3>)}
-            <Button color="default"><div><Link to="/signuppage">Create New User!</Link></div></Button>
-        </div>
-       
-      </div>
-  
-     
-    );
   }
   
-}
-
-export default LogIn;
+  export default LogIn;
