@@ -5,34 +5,42 @@ import {Button} from "grommet";
 
 
 
-function SignupPage() {
-    return (
-      <div>
-      <NavBar/>
-        <div>
-          <label>Welcome! </label>
-        </div>
-        <div >
-          <form>
-            <label>
-              Username:
-              <input type="text" name="name" />
-            </label>
-            <br></br>
-            <label>
-              Password:
-              <input type="text" name="name" />
-            </label>
-                
-              <Button color="default" ><div><Link to="/startscreen">Begin Your Quest!</Link></div></Button>
-          </form>
+class SignupPage extends React.Component {
+
+    handleSubmit = (event) => {
+        console.log(event.target)
+    }
+
+    render () {
+        return (
+            <div>
+            <NavBar/>
+              <div>
+                <label>Welcome! </label>
+              </div>
+              <div >
+                <form onSubmit={(event) => this.handleSubmit(event)}>
+                  <label>
+                    Username:
+                    <input type="text" name="name" />
+                  </label>
+                  <br></br>
+                  <label>
+                    Password:
+                    <input type="text" name="name" />
+                  </label>
+                      
+                    <Button color="default" ><div><Link to="/startscreen">Begin Your Quest!</Link></div></Button>
+                </form>
+                 
+              </div>
+             
+            </div>
+        
            
-        </div>
-       
-      </div>
-  
-     
-    );
+          );
+    }
+    
   }
   
   export default SignupPage;

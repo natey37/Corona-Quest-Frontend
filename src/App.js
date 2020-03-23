@@ -20,7 +20,13 @@ class App extends React.Component {
           score: 0, 
           user_id: 1, 
       },
-      charID: null
+      charID: null,
+      userForm: {
+        username: '', 
+        password: ''
+      }, 
+      userLogged: null, 
+      errors: []
     }
   //fetch characters
   componentDidMount(){
@@ -35,20 +41,6 @@ class App extends React.Component {
       }) 
   }
 
- 
-   ///reset newChar form
-//    resetForm = () => {
-//     this.setState({
-//         characterForm: {
-//             name: "", 
-//             strength: 10, 
-//             hp: 100,
-//             score: 0, 
-//             user_id: 1 
-//         }
-//     })
-// }
-
   ///handle char form change
   handleNewCharacter = (event) => {
       this.setState({
@@ -59,13 +51,6 @@ class App extends React.Component {
   ////add new character to backend 
   createNewCharacter = (event) => {
       event.preventDefault()
-     
-      // console.log(this.state.characterForm)
-     
-      
-      // .resp(resp => resp.json()).then(data => {console.log(data)})
-      console.log("form sent?")
-      // this.resetForm()
   }
 
 
@@ -99,27 +84,50 @@ class App extends React.Component {
             
               }
             )
-            // .then(resp => resp.json())
-            // .then(characters => {
-            //   console.log(characters)
-            //   this.setState({
-            //     characters: characters
-            //   }, () => {
-            //     console.log(characters)
-            //     let highScores = characters.sort((a,b) => a.score > b.score ? 1 : -1).slice(0,15)
-            //     this.setState({
-            //       highScores: highScores
-            //     })
-            //   })
-            // })
-            
-    
     })
-
-    
-
-    
 }
+
+  
+
+  handleLoginChange = (event) => {
+    this.setState({
+      userForm: {
+        ...this.state.userForm, [event.target.name]: event.target.value
+      }
+    })
+  }
+
+  handleLoginSubmit = (event) => {
+    event.preventDefault()
+    fetch('http://localhost:3000/users', {
+      method: "POST", 
+      headers: {
+          'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(this.state.userForm)
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      console.log(resp)
+      if(resp.status === "User created successfully"){
+        this.setState({
+          userLogged: true
+        })
+      } else {
+        this.setState({
+          userLogged: false,
+          errors: resp.errors
+        })
+      }
+    })
+    // this.setState({
+    //   userForm: {
+    //     username: '', 
+    //     password: ''
+    //   }
+    // })
+   
+  }
 
   render(){
 
@@ -127,7 +135,9 @@ class App extends React.Component {
    
       <div className="App">
          <Switch>
-            <Route exact path="/" component={Login} /> 
+            <Route exact path="/" 
+            render={(props) => <Login {...props} userForm={this.state.userForm} handleChange={this.handleLoginChange} handleSubmit={this.handleLoginSubmit}userLogged={this.state.userLogged} errors={this.state.errors}/>}
+            /> 
             <Route exact path="/startscreen" 
             render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter}/>}
             />
