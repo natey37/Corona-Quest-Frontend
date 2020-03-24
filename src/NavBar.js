@@ -1,6 +1,7 @@
 import React from 'react';
 import Pink_Virus from './Pink_Virus.png';
 import Blue_Virus from './Blue_Virus.png';
+import CoronaQuest from './CoronaQuest.png'
 import styled, { keyframes } from "styled-components"
 
 import { Box, Grommet, Nav, Header } from "grommet";
@@ -15,8 +16,8 @@ function NavBar(props) {
   
 
 const Button = styled.button`
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+  background: ${props => props.primary ? "black" : "white"};
+  color: ${props => props.primary ? "white" : "white"};
   
   font-size: 1em;
   margin: 1em;
@@ -42,23 +43,25 @@ const Rotate = styled.div`
   font-size: 1.2rem;
 `;
 
-
+  console.log(props)
   return (
     <div className="nav-bar">
 
         <Grommet theme={grommet}>
             <Header background="dark-1" pad="medium">
               <Box direction="row" align="center" gap="small">
-               CORONA QUEST!
+               <img src={CoronaQuest} style={{width: 100 + '%'}}></img>
               </Box>
               <Nav direction="row">
               <div>
                     <Rotate><img src={Pink_Virus}></img></Rotate>
                       <Button><div><Link to="/scoreboard">Scoreboard</Link></div></Button> 
                       <Button color="default" ><div><Link to="/startscreen">Play Game</Link></div></Button>
-                      <Button color="default" ><div><Link to="/">SignUp</Link></div></Button>
-                      <Button color="default" ><div><Link to="/game">Game</Link></div></Button>
-                      <Button color="default" ><div><Link to="/signuppage">login</Link></div></Button>
+                      {/* <Button color="default" ><div><Link to="/">SignUp</Link></div></Button> */}
+                      {/* <Button color="default" ><div><Link to="/game">Game</Link></div></Button> */}
+                      {/* {props.userLogged === null && <Button color="default" ><div><Link to="/login">Login</Link></div></Button>}
+                      {props.userLogged && <Button color="default" ><div><Link to="/scoreboard">Logout</Link></div></Button>} */}
+                      {/* <Button color="default" ><div><Link to="/signuppage">login</Link></div></Button> */}
                       <Rotate><img src={Blue_Virus}></img></Rotate>
                     </div>
               </Nav>

@@ -24,7 +24,7 @@ class StartScreen extends React.Component {
      
             <div className="StartScreen">
             <NavBar/>
-            {/* {this.props.isLogged && <Redirect to='/' />} */}
+            {this.props.userLogged === null && <Redirect to='/' />}
             <br></br>
                 <div>
                     Begin Your Corona Quest!

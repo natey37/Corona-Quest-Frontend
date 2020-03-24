@@ -6,7 +6,7 @@ import Game from './Game'
 import LogIn from './LogIn'
 import { Router, Route, Switch } from "react-router-dom";
 import history from './history';
-
+import NavBar from './NavBar'
 
 class App extends React.Component {
 
@@ -27,7 +27,11 @@ class App extends React.Component {
         password: ''
       }, 
       userLogged: null, 
-      errors: []
+      errors: [], 
+      loginForm: {
+        username: '', 
+        password: ''
+      }
     }
 
   //fetch characters
@@ -87,7 +91,7 @@ class App extends React.Component {
 
   
 
-  handleLoginChange = (event) => {
+  handleNewUserChange = (event) => {
     this.setState({
       userForm: {
         ...this.state.userForm, [event.target.name]: event.target.value
@@ -95,7 +99,15 @@ class App extends React.Component {
     })
   }
 
-  handleLoginSubmit = (event) => {
+  handleLoginChange = (event) => {
+    this.setState({
+      loginForm: {
+        ...this.state.loginForm, [event.target.name]: event.target.value
+      }
+    })
+  }
+
+  handleNewUserSubmit = (event) => {
     event.preventDefault()
     fetch('http://localhost:3000/users', {
       method: "POST", 
@@ -119,18 +131,24 @@ class App extends React.Component {
         })
       }
     })
-    
+  }
+
+  handleLoginSubmit = (event) => {
+    event.preventDefault()
+    console.log("working")
   }
 
   render(){
 
     return (
-   
       <div className="App">
+
           <Router history={history}>
          <Switch>
+            <Route exact path="/navbar"
+            render={(props) => <NavBar {...props}userLogged={this.state.userLogged} />}/> 
             <Route exact path="/" 
-            render={(props) => <SignUp {...props} userForm={this.state.userForm} handleChange={this.handleLoginChange} handleSubmit={this.handleLoginSubmit}userLogged={this.state.userLogged} errors={this.state.errors}/>}
+            render={(props) => <SignUp {...props} userForm={this.state.userForm} handleNewUserChange={this.handleNewUserChange} handleNewUserSubmit={this.handleNewUserSubmit} userLogged={this.state.userLogged} errors={this.state.errors} loginForm={this.state.loginForm} handleLoginChange={this.handleLoginChange} handleLoginSubmit={this.handleLoginSubmit}/>}
             /> 
             <Route exact path="/startscreen" 
             render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter} userLogged={this.state.userLogged}/>}
@@ -141,7 +159,7 @@ class App extends React.Component {
             <Route exact path="/scoreboard" 
              render={(props) => <ScoreBoard {...props} highScores={this.state.highScores} characterForm={this.state.characterForm} userLogged={this.state.userLogged}/>}
             />
-            <Route exact path="/signuppage" component={LogIn} />
+            <Route exact path="/login" component={LogIn} />
         </Switch> 
         </Router>
       </div>
