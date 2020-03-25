@@ -34,12 +34,17 @@ class SignUp extends React.Component {
               <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.password} type="text" name="password" />
             </label>
             <br></br>
+            <label>
+              Password Confirmation:
+              <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.passwordConfirmation} type="text" name="passwordConfirmation" />
+            </label>
+            <br></br>
             <br></br>
            
 
               <input  type="submit" value="Create Account" ></input>
           </form>
-          {this.props.userLogged === false && this.props.errors.map(error => <h3 key={error}>{error}</h3>)}
+          {/* {this.props.userLogged === false && this.props.errors.map(error => <h3 key={error}>{error}</h3>)} */}
             
         </div>
         <br></br>

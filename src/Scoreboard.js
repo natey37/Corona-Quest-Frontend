@@ -32,8 +32,10 @@ class ScoreBoard extends React.Component {
                     {this.renderRow}
                 </FixedSizeList> */}
                 <Grommet theme={grommet}>
-                    <h1>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + "your score is: " + this.props.characterForm.score + " !!!": "Press Play Game to Begin Your Quest!"}</h1>
-                    <h1>Leaders!</h1>
+                    <h1 style={{textAlign: "center"}}>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + "your score is: " + this.props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"}
+                    </h1>
+                    <br></br>
+                    <h1 style={{textAlign: "center"}}>Leaders!</h1>
                     <Box align="center" pad="large">
                         <List data={this.props.highScores.map(score => score.name)} />
                         {/* <List data={this.props.highScores.map(score => score.score)} /> */}

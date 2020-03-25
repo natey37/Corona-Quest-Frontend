@@ -1,16 +1,30 @@
+// import React from 'react';
+// import Cell from './components/Cell.js'
+// import Obstacle from './components/Rock.js/index.js'
+// import Treasure from './components/Treasure.js'
+// import Exit from './components/Exit.js'
+
+// import './styling/Game.css';
+// import obstaclesList from './resources/obstaclesList.js'
+// import treasuresList from './resources/treasuresList.js'
+// import exitsList from './resources/exitsList.js'
+
+// import NavBar from './NavBar.js';
+// import { Link, Redirect} from "react-router-dom";
+
 import React from 'react';
 import Cell from './components/Cell.js'
-import Obstacle from './components/Obstacle.js'
+import Tree from './components/Tree.js'
+import Rock from  './components/Rock.js'
 import Treasure from './components/Treasure.js'
 import Exit from './components/Exit.js'
-
 import './styling/Game.css';
-import obstaclesList from './resources/obstaclesList.js'
+import treesList from './resources/treesList.js'
+import rocksList from './resources/rocksList.js'
 import treasuresList from './resources/treasuresList.js'
 import exitsList from './resources/exitsList.js'
-
 import NavBar from './NavBar.js';
-import { Link, Redirect} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Specs for map + grid size, values below for wireframe map size
 const CELL_SIZE = 45; // 45
@@ -30,9 +44,10 @@ class Game extends React.Component {
     state = {
         cells: [ {x: 5, y: 5} ],  // Player Character starting location  // REMOVE ARRAY
         points: 0,
-        obstacles: obstaclesList,  // Obstacle locations imported 
-        treasures: treasuresList,
-        exits: exitsList,  //    from resources folder    
+        obstacles: treesList,  
+        rocks: rocksList,
+        treasures: treasuresList, 
+        exits: exitsList,  
         characterName: ''
     }
     // sets current character form 
@@ -389,7 +404,7 @@ class Game extends React.Component {
 
     render() {
         
-        const { cells, obstacles, treasures, exits } = this.state;
+        const { cells, obstacles, treasures, exits, rocks } = this.state;
         let div = document.getElementById("Board")
         
         console.log(this.state.points)
@@ -420,8 +435,11 @@ class Game extends React.Component {
                     style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
                     ref={(n) => { this.boardRef = n; }}>
                     {obstacles.map(obstacle => (
-                        <Obstacle x={obstacle.x} y={obstacle.y} key={`${obstacle.x},${obstacle.y}`}/>
-                    ))}        
+                        <Tree x={obstacle.x} y={obstacle.y} key={`${obstacle.x},${obstacle.y}`}/>
+                    ))}    
+                     {rocks.map(rock => (
+                        <Rock x={rock.x} y={rock.y} key={`${rock.x},${rock.y}`}/>
+                    ))}     
                     {cells.map(cell => (
                         <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                         
@@ -430,7 +448,7 @@ class Game extends React.Component {
                         <Treasure x={treasure.x} y={treasure.y} key={`${treasure.x},${treasure.y}`}/>
                         
                     ))} 
-                    {exits.map(exit => (
+                     {exits.map(exit => (
                         <Exit x={exit.x} y={exit.y} key={`${exit.x},${exit.y}`}/>
                         
                     ))} 

@@ -43,7 +43,6 @@ const Rotate = styled.div`
   font-size: 1.2rem;
 `;
 
-  console.log(props)
   return (
     <div className="nav-bar">
 

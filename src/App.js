@@ -24,14 +24,16 @@ class App extends React.Component {
       charID: null,
       userForm: {
         username: '', 
-        password: ''
+        password: '',
+        passwordConfirmation: ''
       }, 
       userLogged: null, 
       errors: [], 
       loginForm: {
         username: '', 
-        password: ''
-      }
+        password: '', 
+      },
+      currentUser: null
     }
 
   //fetch characters
@@ -45,6 +47,17 @@ class App extends React.Component {
           })
       }) 
   }
+
+  //set user 
+  setUser = (user) => {
+    console.log(this.props.history)
+    this.setState({
+      currentUser: user
+    }, () => {
+      this.props.history.push("/startscreen")
+    })
+  }
+
 
   ///handle char form change
   handleNewCharacter = (event) => {
@@ -109,7 +122,9 @@ class App extends React.Component {
 
   handleNewUserSubmit = (event) => {
     event.preventDefault()
-    fetch('http://localhost:3000/users', {
+
+    if(this.state.userForm.password === this.state.userForm.passwordConfirmation) {
+      fetch('http://localhost:3000/users', {
       method: "POST", 
       headers: {
           'Content-Type': 'application/json'
@@ -117,29 +132,66 @@ class App extends React.Component {
       body: JSON.stringify(this.state.userForm)
     })
     .then(resp => resp.json())
-    .then(resp => {
-      console.log(resp)
-      if(resp.status === "User created successfully"){
-        this.setState({
-          userLogged: true,
-          characterForm: {...this.state.characterForm, user_id: resp.user_id}
-        })
+    .then(response => {
+      console.log(response)
+      if(response.errors){
+        alert(response.errors)
       } else {
+        this.setUser(response)
         this.setState({
-          userLogged: false,
-          errors: resp.errors
-        })
-      }
+              userLogged: true,
+              characterForm: {...this.state.characterForm, user_id: response.user_id}
+            })
+     }
+
+
+      // if(resp.status === "User created successfully"){
+      //   this.setState({
+      //     userLogged: true,
+      //     characterForm: {...this.state.characterForm, user_id: resp.user_id}
+      //   })
+      // } else {
+      //   this.setState({
+      //     userLogged: false,
+      //     errors: resp.errors
+      //   })
+      // }
     })
+    } else {
+      alert("Passwords don't match!")
+    }
+
   }
 
   handleLoginSubmit = (event) => {
     event.preventDefault()
     console.log("working")
+    fetch('http://localhost:3000/login', {
+      method: "POST", 
+      headers: {
+          'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(this.state.loginForm)
+    })
+    .then(resp => resp.json())
+    .then(response => {
+      console.log(response)
+      if(response.errors){
+        alert(response.errors)
+      } else {
+        this.setUser(response)
+        this.setState({
+          userLogged: true,
+          characterForm: {...this.state.characterForm, user_id: response.id}
+        })
+      }
+     
+    })
+   
   }
 
   render(){
-
+    console.log(this.state.currentUser)
     return (
       <div className="App">
 
@@ -148,7 +200,7 @@ class App extends React.Component {
             <Route exact path="/navbar"
             render={(props) => <NavBar {...props}userLogged={this.state.userLogged} />}/> 
             <Route exact path="/" 
-            render={(props) => <SignUp {...props} userForm={this.state.userForm} handleNewUserChange={this.handleNewUserChange} handleNewUserSubmit={this.handleNewUserSubmit} userLogged={this.state.userLogged} errors={this.state.errors} loginForm={this.state.loginForm} handleLoginChange={this.handleLoginChange} handleLoginSubmit={this.handleLoginSubmit}/>}
+            render={(props) => <SignUp {...props} setUser={this.setUser} userForm={this.state.userForm} handleNewUserChange={this.handleNewUserChange} handleNewUserSubmit={this.handleNewUserSubmit} userLogged={this.state.userLogged} errors={this.state.errors} loginForm={this.state.loginForm} handleLoginChange={this.handleLoginChange} handleLoginSubmit={this.handleLoginSubmit}/>}
             /> 
             <Route exact path="/startscreen" 
             render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter} userLogged={this.state.userLogged}/>}
