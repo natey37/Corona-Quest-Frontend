@@ -42,7 +42,31 @@ export default function SimpleTable(props) {
   return (
     <TableContainer component={Paper} align='center' style={{backgroundImage: `url(${cb6})`}}>
       <Table className={classes.table} aria-label="simple table">
+      <TableRow style={{fontWeight: "bold", fontSize: 40 + 'px', textAlign: 'center'}}>
+              {props.userLogged ? props.characterForm.name.toUpperCase() + " your score is: " + props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"} 
+            </TableRow>
+            <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
+              ______________________________________
+            </TableRow>
+            <TableRow style={{fontWeight: "bold", fontSize: 35 + 'px', textAlign: 'center'}}>
+              <br></br>
+              LeaderBoard!
+              <br></br>
+            </TableRow>
+      </Table>
+        
+      <Table className={classes.table} aria-label="simple table">
+      
         <TableHead>
+            {/* <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
+              {props.userLogged ? props.characterForm.name.toUpperCase() + " your score is: " + props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"} 
+            </TableRow>
+            <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
+              ______________________________________
+            </TableRow>
+            <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
+              LeaderBoard!
+            </TableRow> */}
           <TableRow>
             <TableCell style={{fontWeight: "bold", fontSize: 30 + 'px'}}>Username</TableCell>
             <TableCell align="right" style={{fontWeight: "bold", fontSize: 30 + 'px'}}>Character</TableCell>

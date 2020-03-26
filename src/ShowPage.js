@@ -3,7 +3,6 @@ import SimpleTable2 from './SimpleTable2';
 import { Redirect } from 'react-router-dom';
 import NavBar from './NavBar'
 
-
 class ShowPage extends React.Component {
 
 
@@ -17,7 +16,7 @@ class ShowPage extends React.Component {
 
     render(){
         return (
-            <div>
+            <div >
                 <NavBar />
                 {this.props.userLogged ? <SimpleTable2 characters={this.props.myChars}/> : <Redirect to='/startscreen'/>}
             </div>

@@ -32,6 +32,8 @@ import {enemy5} from './resources/enemyList1.js'
 import NavBar from './NavBar.js';
 import { Redirect } from 'react-router-dom';
 import cb2 from './cb2.png'
+import Timer from './Timer.js'
+import { textInputs } from 'polished';
 // Specs for map + grid size, values below for wireframe map size
 const CELL_SIZE = 45; // 45
 const WIDTH = 495;    // 495
@@ -768,7 +770,7 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x && exit.y === this.state.cells[0].y + 1) {
-                    this.props.finishGame(this.state.points)
+                    this.props.finishGame(this.state.points + 100)
                 }
             })
         }
@@ -935,7 +937,7 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x + 1 && exit.y === this.state.cells[0].y) {
-                    this.props.finishGame(this.state.points)
+                    this.props.finishGame(this.state.points + 100)
                 }
             })
         }
@@ -1264,7 +1266,7 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x + 1 && exit.y === this.state.cells[0].y + 1) {
-                    this.props.finishGame(this.state.points)
+                    this.props.finishGame(this.state.points + 100)
                 }
             })
         }
@@ -1350,22 +1352,26 @@ class Game extends React.Component {
             return (
                 <div style={{backgroundImage: `url(${cb2})`, height:"100vh"}}>
                     <NavBar/>
+                    <Timer />
                     {this.props.endGame && <Redirect to='/scoreboard' />}
                     <div>
-                    <h2 className="MainQuote">Corona Quest - Please click the grid to begin</h2>
-                        <h3 className="CharacterName">
+                    <h2 className="MainQuote" style={{fontSize: "30px"}}>Corona Quest - Please click the grid to begin</h2>
+                        <h3 className="CharacterName" style={{fontSize: '50px', marginLeft: '10px'}}>
                             Good Luck, {this.state.characterName}
                         </h3>
-                        <h4 className="Message">
+                        <h4 className="Message" style={{fontSize: '20px'}}>
                             {this.state.message}
                         </h4>
-                        <h4 className="HealthPoints">
+                        <h4 className="HealthPoints" style={{fontSize: '30px', textAlign: 'center', marginRight: '400px'}}>
                             HP: {this.state.characterHP} / 100
-                        </h4><br></br><br></br>
-                        <h4 className="ManaPoints">
-                            Mana: {this.props.characterForm.mana} / 100
                         </h4>
-                        <h4 className="Points">
+                        {/* <br></br><br></br> */}
+                        {/* <h4 className="ManaPoints">
+                            Mana: {this.props.characterForm.mana} / 100
+                        </h4> */}
+                        
+                    
+                        <h4 className="Points" style={{fontSize: '30px', textAlign: 'center', marginLeft: '400px'}}>
                             Total Points: {this.state.points}
                         </h4>
                     </div>

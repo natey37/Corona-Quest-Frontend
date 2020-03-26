@@ -34,24 +34,30 @@ class SignUp extends React.Component {
         <br></br>
         <br></br>
         <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+      
         <div>
             <h2 style={{textAlign: "center"}}>Login</h2>
         </div>
         <div style={{textAlign: "center"}}>
           <form onSubmit={(event) => this.props.handleLoginSubmit(event)}>
-            <label>
+            <label style={{fontSize: "30px"}}>
               Username:
               <input onChange={(event) => this.props.handleLoginChange(event)} value={this.props.loginForm.username} type="text" name="username" style={{marginRight: '75px'}} />
             </label>
             <br></br>
             <br></br>
-            <label>
+            <label style={{fontSize: "30px"}}>
               Password:
               <input onChange={(event) => this.props.handleLoginChange(event)} value={this.props.loginForm.password} type="text" name="password" style={{marginRight: '70px'}}/>
             </label>
             <br></br>
 
-            <Button  type="submit" value="Log-In" >Log In</Button>
+            <Button  type="submit" value="Log-In" style={{width: "200px", height: '40px', fontSize: "22px"}}>Log In</Button>
           </form>
          
             
@@ -72,27 +78,27 @@ class SignUp extends React.Component {
         </div>
         <div style={{textAlign: "center"}}>
           <form onSubmit={(event) => this.props.handleNewUserSubmit(event)}>
-            <label>
-              Username:    
+            <label style={{fontSize: "30px"}}>
+              Username: 
               <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.username} type="text" name="username" style={{marginRight: '70px'}}/>
             </label>
             <br></br>
             <br></br>
-            <label>
+            <label style={{fontSize: "30px"}}>
               Password:
               <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.password} type="text" name="password" style={{marginRight: '65px'}}/>
             </label>
             <br></br>
             <br></br>
-            <label>
+            <label style={{fontSize: "30px"}}>
               Password Confirmation:
-              <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.passwordConfirmation} type="text" name="passwordConfirmation" style={{marginRight: '155px'}} />
+              <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.passwordConfirmation} type="text" name="passwordConfirmation" style={{marginRight: '230px'}} />
             </label>
             <br></br>
            
 
-              <Button  type="submit" value="Create Account" >Create Account</Button>
-          </form>
+            <Button  type="submit" value="Create-Account" style={{width: "200px", height: '40px', fontSize: "22px"}}>Create Account</Button>          
+            </form>
           {/* {this.props.userLogged === false && this.props.errors.map(error => <h3 key={error}>{error}</h3>)} */}
             
         </div>

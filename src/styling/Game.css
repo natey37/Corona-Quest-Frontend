@@ -10,6 +10,7 @@
 
 .CharacterName {
     position: absolute;
+    /* text-align: center; */
     left: 1em;
     font-family: "Times New Roman", Times, serif;
     font-style: italic;
@@ -41,7 +42,7 @@
 
 .Message {
     position: absolute;
-    left: 37em;
+    right: 7em;
     padding: 3px;
     margin: 3px;
     text-align: center;

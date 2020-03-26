@@ -37,14 +37,14 @@ class ScoreBoard extends React.Component {
 
                 <NavBar/>
                 <br></br>
-                    <h1 style={{textAlign: "center", fontStyle: 'italic'}}>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + " your score is: " + this.props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"}
+                    {/* <h1 style={{textAlign: "center", fontStyle: 'italic', fontSize: '40px'}}>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + " your score is: " + this.props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"}
                     <br></br>
                        <span>_______________________________________________</span>
                     </h1>       
                              
-                    <h1 style={{textAlign: "center", fontStyle: 'italic'}}>Leader Board!</h1>
+                    <h1 style={{textAlign: "center", fontStyle: 'italic'}}>Leader Board!</h1> */}
 
-                    <SimpleTable highScores={this.props.userLogged ? newScores : this.props.highScores}/>
+                    <SimpleTable userLogged={this.props.userLogged} characterForm={this.props.characterForm} highScores={this.props.userLogged ? newScores : this.props.highScores}/>
 
             </div>
           );

@@ -51,7 +51,7 @@ let rotate = keyframes`
           <Grommet theme={grommet}>
               <Header background="dark-1" pad="medium">
                 <Box direction="row" align="center" gap="small">
-                 <img src={CoronaQuest} style={{width: 100 + '%'}}></img>
+                 <img src={CoronaQuest} style={{width: 50+ '%'}}></img>
                 </Box>
                 <Nav direction="row">
                 <div>

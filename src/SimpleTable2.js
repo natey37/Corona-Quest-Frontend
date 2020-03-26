@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import cb6 from './cb6.png'
 
 
 
@@ -33,7 +33,7 @@ export default function SimpleTable2(props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} align='center' style={{backgroundColor: '#008080'}}>
+    <TableContainer component={Paper} align='center' style={{backgroundImage: `url(${cb6})`}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
             <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
