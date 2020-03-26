@@ -1,57 +1,52 @@
 import React from 'react';
 import NavBar from './NavBar';
-import { Grommet, Box, List } from "grommet";
-import { grommet } from "grommet/themes";
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-// import { FixedSizeList } from 'react-window';
+import SimpleTable from './SimpleTable';
+
 
 
 
 class ScoreBoard extends React.Component {
 
-    renderRow = (props) => {
-        const { index, style } = props;
-      
-        return (
-          <ListItem button style={style} key={index}>
-            <ListItemText primary={`Item ${index + 1}`} />
-          </ListItem>
-        );
-      }
+
+    // state = {
+    //     highScores: []
+    // }
+
+    // componentDidMount(){
+    //     fetch('http://localhost:3000/characters')
+    //     .then(resp => resp.json())
+    //     .then(characters => {
+    //         this.setState({
+    //             highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse().slice(0, 15)
+    //         })
+    //     }) 
+    // }
+
+    componentDidMount(){
+        this.props.resetEndGame()
+    }
+
+
 
     render(){
-        console.log(this.props.highScores)
+       let newScores = this.props.highScores.sort((a,b) => a.score > b.score ? 1 : -1).reverse()
         return (
 
-            <div className="Scoreboard">
-               
+            <div className="Scoreboard" style={{backgroundColor: '#008080'}}>
+
                 <NavBar/>
-                {/* <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
-                    {this.renderRow}
-                </FixedSizeList> */}
-                <Grommet theme={grommet}>
-                    <h1 style={{textAlign: "center"}}>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + "your score is: " + this.props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"}
-                    </h1>
+                <br></br>
+                    <h1 style={{textAlign: "center", fontStyle: 'italic'}}>{this.props.userLogged ? this.props.characterForm.name.toUpperCase() + " your score is: " + this.props.characterForm.score + " !!!": "Click Play Game to Begin Your Quest!"}
                     <br></br>
-                    <h1 style={{textAlign: "center"}}>Leaders!</h1>
-                    <Box align="center" pad="large">
-                        <List data={this.props.highScores.map(score => score.name)} />
-                        {/* <List data={this.props.highScores.map(score => score.score)} /> */}
-                    </Box>
-                   
-                </Grommet>
+                       <span>_______________________________________________</span>
+                    </h1>       
+                             
+                    <h1 style={{textAlign: "center", fontStyle: 'italic'}}>Leader Board!</h1>
+
+                    <SimpleTable highScores={this.props.userLogged ? newScores : this.props.highScores}/>
+
             </div>
-
-            // <div className="Scoreboard">
-            //     <NavBar/>
-            //     <br></br>
-            //      <h1>Your score was {this.props.characterForm.score}</h1>
-            //      <h1>Leaders!</h1>
-
-            //     {this.props.highScores.map(character => <h2 key={character.id}>Name: {character.name} - Score: {character.score} </h2>)}
-            // </div>
           );
     }
 
