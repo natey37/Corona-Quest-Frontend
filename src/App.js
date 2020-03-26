@@ -27,13 +27,14 @@ class App extends React.Component {
         password: '',
         passwordConfirmation: ''
       }, 
-      userLogged: null,  
+      userLogged: false,  
       loginForm: {
         username: '', 
         password: '', 
       },
       currentUser: null, 
-      endGame: false
+      endGame: false,
+      myChars: []
     }
 
 
@@ -112,6 +113,8 @@ class App extends React.Component {
     // this.props.history.push("/startscreen")
 
   }
+
+
 
   resetEndGame = () => {
     this.setState({
@@ -194,6 +197,19 @@ class App extends React.Component {
    
   }
 
+   getMyChars = () => {
+  
+      fetch(`http://localhost:3000/users/${this.state.currentUser.id}`)
+      .then(resp => resp.json())
+      .then(characters => {
+          console.log(characters)
+          this.setState({
+              myChars: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse()
+          })
+      })
+  
+   }
+
   render(){
     console.log(this.state.currentUser)
     console.log(this.state.highScores)
@@ -219,7 +235,7 @@ class App extends React.Component {
              render={(props) => <ScoreBoard {...props} resetEndGame={this.resetEndGame} highScores={this.state.highScores} characterForm={this.state.characterForm} userLogged={this.state.userLogged}/>}
             />
              <Route exact path="/show" 
-             render={(props) => <ShowPage {...props} characters={this.state.characters} currentUser={this.state.currentUser} userLogged={this.state.userLogged}/>}
+             render={(props) => <ShowPage {...props} getMyChars={this.getMyChars}myChars={this.state.myChars} userLogged={this.state.userLogged}/>}
             />
         </Switch> 
         </Router>

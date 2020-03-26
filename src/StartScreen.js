@@ -66,7 +66,7 @@ class StartScreen extends React.Component {
      
             <div className="StartScreen" style={{backgroundImage: `url(${cb5})`, height:"100vh"}}>
             <NavBar/>
-            {this.props.userLogged === null && <Redirect to='/' />}
+            {this.props.userLogged === false && <Redirect to='/' />}
             {this.state.submitted === true && <Redirect to='/game' />}
             <br></br>
                 <div >
