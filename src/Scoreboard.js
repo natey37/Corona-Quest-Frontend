@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from './NavBar';
 
 import SimpleTable from './SimpleTable';
-
+import cb6 from './cb6.png'
 
 
 
@@ -33,7 +33,7 @@ class ScoreBoard extends React.Component {
        let newScores = this.props.highScores.sort((a,b) => a.score > b.score ? 1 : -1).reverse()
         return (
 
-            <div className="Scoreboard" style={{backgroundColor: '#008080'}}>
+            <div className="Scoreboard" style={{backgroundImage: `url(${cb6})`}}>
 
                 <NavBar/>
                 <br></br>

@@ -36,6 +36,21 @@ class App extends React.Component {
       endGame: false
     }
 
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
   //fetch characters
   componentDidMount(){
       fetch('http://localhost:3000/characters')

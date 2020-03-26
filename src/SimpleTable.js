@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from "react-router-dom";
-
+import cb6 from './cb6.png'
 
 // const rows = [
 //   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -40,7 +40,7 @@ export default function SimpleTable(props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} align='center' style={{backgroundColor: '#008080'}}>
+    <TableContainer component={Paper} align='center' style={{backgroundImage: `url(${cb6})`}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>

@@ -3,6 +3,7 @@ import NavBar from './NavBar'
 import { Link, Redirect } from "react-router-dom";
 import { Box, Grommet, Nav, Header, Button } from "grommet";
 import styled from "styled-components"
+import cb5 from './cb5.png'
 
 
 class StartScreen extends React.Component {
@@ -53,7 +54,7 @@ class StartScreen extends React.Component {
     render(){
 
         const Button = styled.button`
-            background: #f7b01f;
+            background: #6bfa0b;
             
             font-size: 1em;
             margin: 1em;
@@ -63,12 +64,16 @@ class StartScreen extends React.Component {
             `;
         return (
      
-            <div className="StartScreen" style={{backgroundColor: '#008080', height:"100vh"}}>
+            <div className="StartScreen" style={{backgroundImage: `url(${cb5})`, height:"100vh"}}>
             <NavBar/>
             {this.props.userLogged === null && <Redirect to='/' />}
             {this.state.submitted === true && <Redirect to='/game' />}
             <br></br>
                 <div >
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
                     <h1 style={{textAlign: 'center'}}>Begin Your Corona Quest!</h1>
                         <div style={{textAlign: 'center'}}>
                             <Button onClick={this.showInstructions}>
@@ -85,14 +90,9 @@ class StartScreen extends React.Component {
         
                 </div>
     
-                {/* Choose Your Character! 
-                <select>
-                    {this.state.characters.map(character => <option key={character.id}>Name: {character.name} - Strength: {character.strength} - HP: {character.hp} </option>)}
-                </select>
+               
                 <br></br>
                 <br></br>
-                <br></br> */}
-
                 <h1 style={{textAlign: 'center'}}>Name your Character! </h1>
                 <div style={{textAlign: 'center'}}>
                     <form onSubmit={(event) => this.submitCharacter(event)}>

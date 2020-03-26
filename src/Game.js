@@ -31,7 +31,7 @@ import {enemy4} from './resources/enemyList1.js'
 import {enemy5} from './resources/enemyList1.js'
 import NavBar from './NavBar.js';
 import { Redirect } from 'react-router-dom';
-
+import cb2 from './cb2.png'
 // Specs for map + grid size, values below for wireframe map size
 const CELL_SIZE = 45; // 45
 const WIDTH = 495;    // 495
@@ -1348,7 +1348,7 @@ class Game extends React.Component {
             console.log(this.props.endGame)
             const { cells, obstacles, rocks, treasures, exits, enemy1, enemy2, enemy3, enemy4, enemy5 } = this.state;  
             return (
-                <div>
+                <div style={{backgroundImage: `url(${cb2})`, height:"100vh"}}>
                     <NavBar/>
                     {this.props.endGame && <Redirect to='/scoreboard' />}
                     <div>

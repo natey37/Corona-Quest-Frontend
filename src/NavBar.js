@@ -58,17 +58,13 @@ let rotate = keyframes`
                       <Rotate><img src={Pink_Virus}></img></Rotate>
                         <Button><div><Link to="/scoreboard" style={{color: 'black'}}>Scoreboard</Link></div></Button> 
                         <Button color="default" ><div><Link to="/startscreen" style={{color: 'black'}}>Play Game</Link></div></Button>
-                        {
+                        {/* {
                         this.props.userLogged ? 
                         <Button color="default" ><div><Link to="/show" style={{color: 'black'}}>My Heros</Link></div></Button> 
                         :
                         null
-                        }
-                        {/* <Button color="default" ><div><Link to="/">SignUp</Link></div></Button> */}
-                        {/* <Button color="default" ><div><Link to="/game">Game</Link></div></Button> */}
-                        {/* {props.userLogged === null && <Button color="default" ><div><Link to="/login">Login</Link></div></Button>}
-                        {props.userLogged && <Button color="default" ><div><Link to="/scoreboard">Logout</Link></div></Button>} */}
-                        {/* <Button color="default" ><div><Link to="/signuppage">login</Link></div></Button> */}
+                        } */}
+                       
                         <Rotate><img src={Blue_Virus}></img></Rotate>
                       </div>
                 </Nav>

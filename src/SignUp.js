@@ -5,16 +5,17 @@ import NavBar from './NavBar';
 import { Link, Redirect } from "react-router-dom";
 import {Button} from "grommet";
 import styled from "styled-components"
-
-
-
+import coronaBackground from './coronaBackground.png';
+import cb2 from './cb2.png'
+import cb3 from './cb3.png'
+import cb4 from './cb4.png'
 class SignUp extends React.Component {
 
  
   render () {
 
     const Button = styled.button`
-    background: #f7b01f;
+    background: #6bfa0b;
     
     font-size: 1em;
     margin: 1em;
@@ -22,13 +23,15 @@ class SignUp extends React.Component {
     border: 2px solid red;
     border-radius: 3px;
     `;
-    
+
+    // backgroundColor: '#008080'
     return (
-      <div style={{backgroundColor: '#008080', height:"100vh"}}>
+      <div style={{backgroundImage: `url(${cb2})`, height:"100vh"}}>
       <NavBar />
       {this.props.userLogged === true && <Redirect to='/startscreen' />}
     
 
+        <br></br>
         <br></br>
         <br></br>
         <div>
@@ -47,7 +50,6 @@ class SignUp extends React.Component {
               <input onChange={(event) => this.props.handleLoginChange(event)} value={this.props.loginForm.password} type="text" name="password" style={{marginRight: '70px'}}/>
             </label>
             <br></br>
-            <br></br>
 
             <Button  type="submit" value="Log-In" >Log In</Button>
           </form>
@@ -58,13 +60,13 @@ class SignUp extends React.Component {
 
 
         
-        <br></br>
+        
 
         <div>
           <h4 style={{textAlign: "center"}}>OR</h4>
         </div>
 
-        <br></br>
+        
         <div>
             <h2 style={{textAlign: "center"}}>Sign Up</h2>        
         </div>
@@ -86,7 +88,6 @@ class SignUp extends React.Component {
               Password Confirmation:
               <input onChange={(event) => this.props.handleNewUserChange(event)} value={this.props.userForm.passwordConfirmation} type="text" name="passwordConfirmation" style={{marginRight: '155px'}} />
             </label>
-            <br></br>
             <br></br>
            
 
