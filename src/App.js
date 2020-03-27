@@ -34,7 +34,9 @@ class App extends React.Component {
       },
       currentUser: null, 
       endGame: false,
-      myChars: []
+      myChars: [],
+      // seconds: 90,
+      // timerPoints: 0
     }
 
 
@@ -62,7 +64,23 @@ class App extends React.Component {
               highScores: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse().slice(0, 15)
           })
       }) 
+
+      // this.myInterval = setInterval(() => {
+      //   const { seconds} = this.state
+      //   if (seconds > 0) {
+      //     this.setState(({ seconds }) => ({
+      //       seconds: seconds - 1
+      //     }))
+      //   }
+      //   if (seconds === 0) {
+      //     clearInterval(this.myInterval)
+      //   }
+      // }, 1000)
   }
+
+  // componentDidUnmount(){
+  //   clearInterval(this.myInterval)
+  // }
 
   //set user 
   setUser = (user) => {
@@ -86,12 +104,12 @@ class App extends React.Component {
 
    //test finish game --> send points to scoreboard
    finishGame = (points) => {
-     console.log(this.state.characterForm)
-    this.setState({
-      characterForm: {...this.state.characterForm, score: points},
-      gameOver: true, 
-      endGame: true 
-    }, () => {
+     
+      this.setState({
+        characterForm: {...this.state.characterForm, score: points},
+        gameOver: true, 
+        endGame: true 
+      }, () => {
       console.log(this.state.characterForm)
       fetch('http://localhost:3000/characters', {
             method: "POST", 
@@ -108,7 +126,7 @@ class App extends React.Component {
             })
     },
 
-    )
+      )
     // this.history.push('/scoreboard')
     // this.props.history.push("/startscreen")
 
@@ -199,16 +217,63 @@ class App extends React.Component {
 
    getMyChars = () => {
   
-      fetch(`http://localhost:3000/users/${this.state.currentUser.id}`)
+      fetch(`http://localhost:3000/users/${this.state.characterForm.user_id}`)
       .then(resp => resp.json())
       .then(characters => {
           console.log(characters)
-          this.setState({
+          if(characters.length === 0){
+            this.setState({
+              myChars: []
+            })
+          } else {
+            this.setState({
               myChars: characters.sort((a,b) => a.score > b.score ? 1 : -1).reverse()
           })
+          }
+          
       })
   
    }
+
+//    timerPoints = () => {
+//     if(this.state.seconds > 80){
+//         this.setState({
+//             seconds: this.state.seconds + 500
+//         })
+//     } else if(this.state.seconds > 70){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 400
+//         })
+//     } else if(this.state.seconds > 60){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 300
+//         })
+//     } else if(this.state.seconds > 50){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 200
+//         })
+//     } else if(this.state.seconds > 40){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 100
+//         })
+//     } else if(this.state.seconds > 30){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 50
+//         })
+//     } else if(this.state.seconds > 20){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 25
+//         })
+//     } else if(this.state.seconds > 10){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 10
+//         })
+//     } else if(this.state.seconds > 0){
+//         this.setState({
+//             timerPoints: this.state.timerPoints + 5
+//         })
+//     }
+// }
 
   render(){
     console.log(this.state.currentUser)
@@ -229,7 +294,7 @@ class App extends React.Component {
             render={(props) => <StartScreen {...props} characterForm={this.state.     characterForm} createNewCharacter={this.createNewCharacter} handleNewCharacter={this.handleNewCharacter} userLogged={this.state.userLogged}/>}
             />
             <Route exact path="/game" 
-            render={(props) => <Game {...props} endGame={this.state.endGame}characterName={this.state.characterForm.name} characterForm={this.state.characterForm} finishGame={this.finishGame} points={this.state.points} userLogged={this.state.userLogged} />}
+            render={(props) => <Game {...props} seconds={this.state.seconds} endGame={this.state.endGame}characterName={this.state.characterForm.name} characterForm={this.state.characterForm} finishGame={this.finishGame} points={this.state.points} userLogged={this.state.userLogged} />}
             />
             <Route exact path="/scoreboard" 
              render={(props) => <ScoreBoard {...props} resetEndGame={this.resetEndGame} highScores={this.state.highScores} characterForm={this.state.characterForm} userLogged={this.state.userLogged}/>}

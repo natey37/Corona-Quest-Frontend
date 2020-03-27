@@ -68,7 +68,8 @@ class Game extends React.Component {
         enemy5Loc: 0,
         characterName: '',
         characterHP: 0,
-        message: ''
+        message: '', 
+        seconds: 90
     }
     // sets current character form 
     componentDidMount(){
@@ -77,11 +78,37 @@ class Game extends React.Component {
             points: this.props.points,
             characterHP: this.props.characterForm.hp
         })
+
         this.interval1 = setInterval(this.startEnemy1, 1000)
         this.interval2 = setInterval(this.startEnemy2, 1500)
         this.interval3 = setInterval(this.startEnemy3, 750)
         this.interval4 = setInterval(this.startEnemy4, 1000)
         this.interval5 = setInterval(this.startEnemy5, 500)
+
+        // this.myInterval = setInterval(() => {
+        //           const { seconds} = this.state
+        //           if (seconds > 0) {
+        //             this.setState(({ seconds }) => ({
+        //               seconds: seconds - 1
+        //             }))
+        //           }
+        //           if (seconds === 0) {
+        //             clearInterval(this.myInterval)
+        //           }
+        //         }, 1000)
+
+        this.myInterval = setInterval(() => {
+                 if(this.state.seconds > 0) {
+                     this.setState({
+                         seconds: this.state.seconds - 1 
+                     })
+                 }
+                 if(this.state.seconds === 0){
+                     clearInterval(this.myInterval)
+                 }
+             }, 1000)
+         
+              
     }
 
     componentWillUnmount(){
@@ -90,6 +117,9 @@ class Game extends React.Component {
         clearInterval(this.interval3)
         clearInterval(this.interval4)
         clearInterval(this.interval5)
+        clearInterval(this.myInterval)
+
+
     }
 
          //  Generates Underlying Grid  //
@@ -593,6 +623,8 @@ class Game extends React.Component {
     
         noHealthDeath = (characterHP) => {
             if (characterHP < 1) {
+                this.timerPoints()
+
                 this.props.finishGame(this.state.points)
             }
         }
@@ -770,7 +802,15 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x && exit.y === this.state.cells[0].y + 1) {
+                    console.log(this.state.points)
+
+                    this.timerPoints()
+                    console.log(this.state.points)
+
                     this.props.finishGame(this.state.points + 100)
+                    console.log(this.state.points)
+
+                    
                 }
             })
         }
@@ -937,7 +977,14 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x + 1 && exit.y === this.state.cells[0].y) {
+                    console.log(this.state.points)
+
+                    this.timerPoints()
+                    console.log(this.state.points)
+
                     this.props.finishGame(this.state.points + 100)
+                    console.log(this.state.points)
+
                 }
             })
         }
@@ -1266,7 +1313,12 @@ class Game extends React.Component {
             this.setState({ treasures: emptyTreasures })
             this.state.exits.forEach((exit) => {
                 if (exit.x === this.state.cells[0].x + 1 && exit.y === this.state.cells[0].y + 1) {
+                    console.log(this.state.points)
+                    this.timerPoints()
+                    console.log(this.state.points)
                     this.props.finishGame(this.state.points + 100)
+                    console.log(this.state.points)
+
                 }
             })
         }
@@ -1343,27 +1395,69 @@ class Game extends React.Component {
         }
     }
 
+    timerPoints = () => {
+        if(this.state.seconds > 80){
+            this.setState({
+                points: this.state.points + 500
+            })
+        } else if(this.state.seconds > 70){
+            this.setState({
+                points: this.state.points + 400
+            })
+        } else if(this.state.seconds > 60){
+            this.setState({
+                points: this.state.points + 300
+            })
+        } else if(this.state.seconds > 50){
+            this.setState({
+                points: this.state.points + 200
+            })
+        } else if(this.state.seconds > 40){
+            this.setState({
+                points: this.state.points + 100
+            })
+        } else if(this.state.seconds > 30){
+            this.setState({
+                points: this.state.points + 50
+            })
+        } else if(this.state.seconds > 20){
+            this.setState({
+                points: this.state.points + 25
+            })
+        } else if(this.state.seconds > 10){
+            this.setState({
+                points: this.state.points + 10
+            })
+        } else if(this.state.seconds > 0){
+            this.setState({
+                points: this.state.points + 5
+            })
+        }
+    }
+
 
         // Map Render function //
 
         render() {
-            console.log(this.props.endGame)
+            
             const { cells, obstacles, rocks, treasures, exits, enemy1, enemy2, enemy3, enemy4, enemy5 } = this.state;  
             return (
-                <div style={{backgroundImage: `url(${cb2})`, height:"100vh"}}>
+                <div style={{backgroundColor: '#f7b01f', height:"100vh"}}>
                     <NavBar/>
-                    <Timer />
+                    <Timer seconds={this.state.seconds}/>
                     {this.props.endGame && <Redirect to='/scoreboard' />}
                     <div>
                     <h2 className="MainQuote" style={{fontSize: "30px"}}>Corona Quest - Please click the grid to begin</h2>
                         <h3 className="CharacterName" style={{fontSize: '50px', marginLeft: '10px'}}>
                             Good Luck, {this.state.characterName}
                         </h3>
-                        <h4 className="Message" style={{fontSize: '20px'}}>
-                            {this.state.message}
-                        </h4>
+                        
                         <h4 className="HealthPoints" style={{fontSize: '30px', textAlign: 'center', marginRight: '400px'}}>
                             HP: {this.state.characterHP} / 100
+                        </h4>
+                        
+                        <h4 className="Message" style={{fontSize: '20px'}}>
+                            {this.state.message}
                         </h4>
                         {/* <br></br><br></br> */}
                         {/* <h4 className="ManaPoints">

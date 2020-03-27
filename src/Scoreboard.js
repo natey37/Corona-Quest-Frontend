@@ -33,7 +33,7 @@ class ScoreBoard extends React.Component {
        let newScores = this.props.highScores.sort((a,b) => a.score > b.score ? 1 : -1).reverse()
         return (
 
-            <div className="Scoreboard" style={{backgroundImage: `url(${cb6})`}}>
+            <div className="Scoreboard" style={{backgroundImage: `url(${cb6})`, }}>
 
                 <NavBar/>
                 <br></br>

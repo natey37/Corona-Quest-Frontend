@@ -33,7 +33,7 @@ export default function SimpleTable2(props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} align='center' style={{backgroundImage: `url(${cb6})`}}>
+    <TableContainer component={Paper} align='center' style={{backgroundImage: `url(${cb6})`, height:"100vh"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
             <TableRow style={{fontWeight: "bold", fontSize: 30 + 'px', textAlign: 'center'}}>
